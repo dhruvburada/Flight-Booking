@@ -76,49 +76,18 @@
     }
 
     .container{margin:2px;}
+
+    .error
+    {
+        color:red;
+    }
    
 </style>
 <body>
 
-
-<!-- Nav BAR -->
-
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Flight GO</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">About us</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Contact us</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Pages
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <li><a class="dropdown-item" href="BillingDetails.php">Billing Details</a></li>
-              <li><a class="dropdown-item" href="TicketDetails.php">Confirm Booking</a></li>
-              <li><a  class="dropdown-item" href="Rewards.php">Rewards Page</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li style="text-align: center;">just for preview</li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
-
-<!-- Nav Bar End -->
+<!-- NAV BAR START -->
+<?php include 'Header.php';?>
+<!-- NAV BAR END -->
 
 <section class="tg-innerbanner">
     <h1>Billing Details</h1>
@@ -219,24 +188,22 @@
                                 
                                         <?php
                                         // Define the number of travelers (change this as per your requirement)
-                                        $numTravelers = 1;
+                                        $numTravelers = 2;
                                         // Generate form fields for each traveler
                                         for ($i = 1; $i <= $numTravelers; $i++) {
                                             echo '
-                                        
                                                 <div class="traveler-row">
                                                     <h6 style="padding-top:10px;">Traveler ' . $i . '</h6>
-            
                                                     <div class="form-group">
                                                         <div class="row">
                                                             <div class="col-md-6">
                                                                 <label for="firstname' . $i . '" class="form-label">First name <sup>*</sup></label>
-                                                                <input type="name" class="form-control" id="firstname' . $i . '" name="FirstName" placeholder="" required pattern="[A-Za-z]+">
+                                                                <input type="name" class="form-control" id="firstname' . $i . '" name="firstname' . $i . '" placeholder="" required pattern="[A-Za-z]+">
                                                                 <div class="invalid-feedback">Please provide a valid first name.</div>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label for="lastname' . $i . '" class="form-label">Last Name<sup>*</sup></label>
-                                                                <input type="text" name="lastname" class="form-control" id="lastname' . $i . '" placeholder="" required>
+                                                                <input type="text" name="lastname' . $i . '" class="form-control" id="lastname' . $i . '" placeholder="" required>
                                                                 <div class="invalid-feedback">Please provide a valid Last name.</div>
                                                             </div>
                                                         </div>
@@ -245,23 +212,20 @@
                                                         <div class="row">
                                                             <div class="col-md-6">
                                                                 <label for="age' . $i . '" class="form-label">Age<sup>*</sup></label>
-                                                                <input type="number" name="age" class="form-control" id="age' . $i . '" placeholder="" required>
+                                                                <input type="number" name="age' . $i . '" class="form-control" id="age' . $i . '" placeholder="" required>
                                                                 <div class="invalid-feedback">Please provide a valid Age.</div>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label for="nationality' . $i . '" class="form-label">Nationality<sup>*</sup></label>
-                                                                <input type="text" name="nationality" class="form-control" id="nationality' . $i . '" placeholder="" required>
+                                                                <input type="text" name="nationality' . $i . '" class="form-control" id="nationality' . $i . '" placeholder="" required>
                                                                 <div class="invalid-feedback">Please provide a valid Nationality.</div>
-
                                                             </div>
-                                                           
                                                         </div>
                                                     </div>
-                                                   
                                                 </div>
                                             ';     
-                                                   
                                         }
+                                        
                                         
                                         ?>
                                 </div>
@@ -422,49 +386,133 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-yFNBgjb/JwvXgrRr00EgrKZpX2VwI1n5CJtiXfTc7OJIIoRKd0zQgPJC2z+gg3GY" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-09Gg7Xx3gLyIETvTg/+QlvkL29s7bxh0fWzhsWbFa4nxwY7gHVYZJ3d2rmnu/BO5" crossorigin="anonymous"></script>
-<!-- Billing Details Validation -->
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
 <script>
-           (function () {
-        'use strict'
+    $(document).ready(function() {
+        // Add custom method to check if the input contains only letters and spaces
+        $.validator.addMethod("lettersAndSpaces", function(value, element) {
+            return this.optional(element) || /^[A-Za-z\s]+$/i.test(value);
+        }, "Please enter only letters and spaces.");
 
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        var forms = document.querySelectorAll('.needs-validation')
+        // Add custom method to validate email format
+        $.validator.addMethod("emailFormat", function(value, element) {
+            return this.optional(element) || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+        }, "Please enter a valid email address.");
 
-        // Loop over them and prevent submission
-        Array.prototype.slice.call(forms)
-            .forEach(function (form) {
-                form.addEventListener('submit', function (event) {
-                    if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
+        // Add custom method to validate phone number format
+        $.validator.addMethod("phoneFormat", function(value, element) {
+            return this.optional(element) || /^[0-9]{10}$/.test(value);
+        }, "Please enter a valid phone number.");
+
+        // Initialize validation for the main form (billingForm)
+        $("#billingForm").validate({
+            rules: {
+                firstname: {
+                    required: true,
+                    lettersAndSpaces: true
+                },
+                lastname: {
+                    required: true,
+                    lettersAndSpaces: true
+                },
+                nationality: {
+                    required: true,
+                    lettersAndSpaces: true
+                },
+                age: {
+                    required: true,
+                    number: true,
+                    min: 0
+                },
+                email: {
+                    required: true,
+                    emailFormat: true
+                },
+                phone: {
+                    required: true,
+                    phoneFormat: true
+                },
+                // Additional traveler's details
+                <?php 
+                    for($i = 1; $i <= $numTravelers; $i++) {
+                        echo "
+                            'firstname$i': {
+                                required: true,
+                                lettersAndSpaces: true
+                            },
+                            'lastname$i': {
+                                required: true,
+                                lettersAndSpaces: true
+                            },
+                            'nationality$i': {
+                                required: true,
+                                lettersAndSpaces: true
+                            },
+                            'age$i': {
+                                required: true,
+                                number: true,
+                                min: 0
+                            },";
                     }
-
-                    form.classList.add('was-validated')
-                }, false)
-            })
-    })();
-
-    (function () {
-        'use strict'
-
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        var forms2 = document.querySelectorAll('.addtravelers')
-
-        // Loop over them and prevent submission
-        Array.prototype.slice.call(forms2)
-            .forEach(function (form) {
-                form.addEventListener('submit', function (event) {
-                    if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
+                ?>
+            },
+            messages: {
+                firstname: {
+                    required: "Please enter your first name."
+                },
+                lastname: {
+                    required: "Please enter your last name."
+                },
+                nationality: {
+                    required: "Please enter your nationality."
+                },
+                age: {
+                    required: "Please enter your age.",
+                    number: "Please enter a valid age.",
+                    min: "Please enter a valid age."
+                },
+                email: {
+                    required: "Please enter your email address."
+                },
+                phone: {
+                    required: "Please enter your phone number."
+                },
+                // Additional traveler's details
+                <?php 
+                    for($i = 1; $i <= $numTravelers; $i++) {
+                        echo "
+                            'firstname$i': {
+                                required: 'Please enter traveler $i first name.'
+                            },
+                            'lastname$i': {
+                                required: 'Please enter traveler $i last name.'
+                            },
+                            'nationality$i': {
+                                required: 'Please enter traveler $i nationality.'
+                            },
+                            'age$i': {
+                                required: 'Please enter traveler $i age.',
+                                number: 'Please enter a valid age for traveler $i.',
+                                min: 'Please enter a valid age for traveler $i.'
+                            },";
                     }
+                ?>
+            },
+        });
 
-                    form.classList.add('was-validated')
-                }, false)
-            })
-    })();
-
+        // Submit handler for the main form
+        $('#placeOrderButton').click(function() {
+            // Check if the main form (billingForm) is valid
+            if ($("#billingForm").valid()) {
+                // Submit the form if valid
+                $('#billingForm').submit();
+            }
+        });
+    });
 </script>
+
     
 </body>
 </html>
