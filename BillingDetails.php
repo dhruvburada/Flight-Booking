@@ -14,19 +14,22 @@
 <style>
 .tg-innerbanner {
     position: relative;
-    height: 450px;
-    background-image: url('booking-hero 2.jpg'); /* Image URL */
+    height: 450px; 
+    background: rgba(0,0,0,0.5) url('img/booking-hero 2.jpg');
+    background-blend-mode: darken;
+    background-repeat: no-repeat;
     background-size: cover;
-    background-position: right !important;
+    background-attachment: fixed;
+    background-position: center center;
     color: #fff;
     text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    /* Darker overlay */
-    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('booking-hero 2.jpg');
+    max-width: 100%;
 }
+
 
     .tg-breadcrumb {
         padding: 0;
@@ -81,14 +84,19 @@
     {
         color:red;
     }
+
+    
    
 </style>
+
+<link rel="stylesheet" href="style.css">
 <body>
 
 <!-- NAV BAR START -->
 <?php include 'Header.php';?>
 <!-- NAV BAR END -->
 
+<div class="col-xl-12 col-xxl-12 col-md-12 col-sm-12 col-xsm-12 col-lg-12">
 <section class="tg-innerbanner">
     <h1>Billing Details</h1>
     <p>One Click To Takeoff</p>
@@ -98,6 +106,7 @@
         <li class="tg-active">Billing Details</li>
     </ul>
 </section>
+</div>
 
 
 <main id="tg-main" class="tg-main tg-haslayout">
@@ -500,6 +509,11 @@
                     }
                 ?>
             },
+
+            errorPlacement: function(error, element) {
+        // Place errors after the element's parent (if it exists) with class 'error-placement'
+        error.insertAfter(element);
+        }
         });
 
         // Submit handler for the main form
@@ -510,7 +524,15 @@
                 $('#billingForm').submit();
             }
         });
+
+        $(document).on('focusout', 'input[id^=firstname], input[id^=lastname], input[id^=nationality], input[id^=age]', function() {
+        // Re-validate the form when focus is out from dynamically added fields
+        $("#billingForm").valid();
     });
+});
+    // });
+
+    
 </script>
 
     
